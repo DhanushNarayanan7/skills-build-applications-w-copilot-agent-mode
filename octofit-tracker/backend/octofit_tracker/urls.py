@@ -14,10 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+import os
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from .views import UserViewSet, TeamViewSet, ActivityViewSet, LeaderboardViewSet, WorkoutViewSet, api_root
+
+# Get codespace name from environment variable
+codespace_name = os.environ.get('CODESPACE_NAME', 'localhost')
+base_url = f"https://{codespace_name}-8000.app.github.dev" if codespace_name != 'localhost' else "http://localhost:8000"
+
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
